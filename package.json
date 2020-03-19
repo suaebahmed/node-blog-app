@@ -1,0 +1,25 @@
+{
+  "name": "blog-with-express",
+  "version": "1.0.0",
+  "description": "simple blog app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "suaeb ahmed",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.1",
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "firebase-admin": "^8.10.0",
+    "mongoose": "^5.9.2"
+  },
+  "devDependencies": {
+    "handlebars": "^4.5.0"
+  }
+}
