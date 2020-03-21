@@ -6,8 +6,8 @@
                 <h1>{{post.title}}</h1>
                 <p>{{post.body}}</p> 
                 <div class="text-muted">published by {{post.author}}</div>
-            <a href="/editPost" id="editBtn"><button class="btn btn-primary btn-block my-4">edit</button></a>
-            <a  id="deleteBtn"><button class="btn btn-danger btn-block">delete</button></a>
+            <a href="/editPost/{{post._id}}" id="editBtn"><button class="btn btn-primary btn-block my-4">edit</button></a>
+            <a href="/delete/{{post._id}}" id="deleteBtn"><button class="btn btn-danger btn-block">delete</button></a>
     </div>
     {{else}}
     <h1>loading...</h1>
