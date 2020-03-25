@@ -1,0 +1,28 @@
+    <div class="container login-container">
+        <div class="row">
+            <div class="col-md-6 login-form-1 mx-auto">
+                <h3>Register Form</h3>
+                    {{>msg}}
+                    <form action="/users/signup" method="post">
+                        <div class="form-group">
+                            <input type="text" id="userName" name="userName" class="form-control" placeholder="Your userName *" value="" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="email" name="email" class="form-control" placeholder="Your email *" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Your Password *" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btnSubmit" value="sign up" />
+                        </div>
+                        <div class="form-group">
+                            <a href="http://localhost:3000/users/login" class="ForgetPwd">have you an account?</a>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+
+    

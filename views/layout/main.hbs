@@ -9,10 +9,19 @@
 <body>
 <div class="container">
     <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/post">Create post</a></li>
-            <li><a href="/">About</a></li>
+        <ul class="nav mr-5">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/post">Create post</a></li>
+            <li class="nav-item"><a class="nav-link" href="/">About</a></li>            
+        </ul>
+        <ul class="nav justify-content-end">
+            {{#if login}}
+                <li class="nav-item"><a class="nav-link">{{user.email}}</a></li>
+                <li class="nav-item"><button><a class="nav-link" href="/users/logout">Logout</a></button></li>
+            {{else}}
+                <li class="nav-item"><a class="nav-link" href="/users/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/users/register">Register</a></li>
+            {{/if}}
         </ul>
     </nav>
 
