@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/css/profile.css">
+
 </head>
 <body>
 <div class="container">
@@ -12,7 +15,8 @@
         <ul class="nav mr-5">
             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="/post">Create post</a></li>
-            <li class="nav-item"><a class="nav-link" href="/">About</a></li>            
+            <li class="nav-item"><a class="nav-link" href="#">About</a></li>            
+            <li class="nav-item"><a class="nav-link" href="/users/profile">Profile</a></li>            
         </ul>
         <ul class="nav justify-content-end">
             {{#if login}}
@@ -27,6 +31,28 @@
 
     {{{body}}}
 
+<footer>
+    <div class="nav">
+    <a href="#" class="logo">logo here</a>
+    <ul>
+        <li><a href="#">link 1</a></li>
+        <li><a href="#">link 2</a></li>
+    </ul>
+    <div class="burger">
+        <div class="line line1"></div>
+        <div class="line line2"></div>
+        <div class="line line3"></div>
+    </div>
+    <div id="modal">
+        <div class="button">
+            <div class="cross cross1"></div>
+            <div class="cross cross2"></div>
+            <div class="cross cross3"></div>
+        </div>
+    </div>
+    </div>
+
+</footer>
     <script src="/index.js"></script>
 </div>
 </body>

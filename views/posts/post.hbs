@@ -6,15 +6,15 @@
                 <h1>{{postData.post.title}}</h1>
                 <p>{{postData.post.body}}</p> 
                 <div class="text-muted">published by {{postData.post.author}}</div>
-
-                <h4>comments:</h4>
+                <span class="badge badge-primary">{{postData.commentCount}}</span>
+                <h4> comments:</h4>
                 <div class="dropdown-divider"></div>
                 {{#if postData.commentCount}}
                             {{#each postData.comments}}
                                 <h6>{{this.body}}</h6>
                             {{/each}}
                     {{else}}
-                    <p>no comment yet</p>
+                    <p>No comment yet</p>
                 {{/if}}
 
                 <form action="/posts/{{postData.post._id}}/comment" method="post">

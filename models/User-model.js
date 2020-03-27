@@ -17,7 +17,10 @@ const userSchema = new mongoose.Schema({
     bio: {
         type: String,
     },
-    userImg: {
+    skills: {
+        type: Array
+    },
+    imgPath: {
         type: String,
     }
 },{

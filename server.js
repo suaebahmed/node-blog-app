@@ -63,5 +63,5 @@ app.use((req,res,next)=>{
 })
 
 app.listen(3000,()=>{
-    console.log("your app is running port on 3000...")
+    console.log("your app is running on http://localhost:3000/")
 })

@@ -4,6 +4,6 @@ module.exports = function(req,res,next){
         return next();
     }
     
-    req.flash('error','to make a comment plase sign in')
+    req.flash('error','the route is protected for see please sign in ')
     res.redirect('/users/login')
 }

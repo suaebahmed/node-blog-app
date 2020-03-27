@@ -2,6 +2,9 @@ const router = require('express').Router();
 const passport = require('passport')
 const User = require('../models/User-model');
 const bcrypt = require('bcryptjs')
+const multer = require('multer')
+const isAuth = require('../config/isAuth')
+const fs = require('fs');
 
 router.get('/login',(req,res)=>{ // turn off login page
     res.render('users/signin')
@@ -77,6 +80,57 @@ router.post('/signup',(req,res)=>{
                 })
             }
         })
+    }
+})
+//  ----------- user profile -----
+
+router.get('/profile',isAuth,(req,res,next)=>{
+    res.render('users/profile')
+})
+
+const storage = multer.diskStorage({
+    destination: function(req,file,cb){
+        cb(null,`./public/uploads`)
+    },
+    filename: function(req,file,cb){
+        cb(null,file.originalname)
+    }
+})
+const upload = multer({
+    storage
+})
+router.post('/upload',upload.single('image'),(req,res,next)=>{
+    User.findOne({email: req.user.email},(err,user)=>{
+        if(err){
+           return res.send('Error to upload a file')
+        }else{
+            
+            const bio = req.body.bio
+            if(req.file){
+                const fileName = req.file.originalname
+                user.imgPath = `/uploads/${fileName}`
+            }
+            if(bio && bio !== ''){
+                user.bio = bio;
+            }
+    
+            user.save(err=>{
+                if(err){
+                    return res.send('Error to upload a file')
+                 }else{
+                     res.redirect('/users/profile')
+                 }
+            })
+        }
+    })
+})
+
+router.get('/delete',(req,res,next)=>{
+    try{
+    fs.unlinkSync(`./public${req.user.imgPath}`)
+      return  res.redirect('/users/profile')
+    }catch(err){
+        res.status(500).json({msg: 'error to delete file',err: err})
     }
 })
 

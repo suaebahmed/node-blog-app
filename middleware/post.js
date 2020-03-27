@@ -73,17 +73,21 @@ exports.makeAComment = (req,res,next)=>{
             return res.status(500).json({'error': err})
         })
 }
+
 exports.deleteAPost = (req,res,next)=>{
     const id = req.params.id;
-    Post.deleteOne({_id: id},(err)=>{
-        if(err){
-            res.send('Error')
-            res.end()
-        }else{
-            res.redirect('/')
-        }    
-    })
+    Comment.deleteMany({postId: id})
+           .then(()=>{
+               return Post.deleteOne({_id: id})
+           })
+           .then(()=>{
+               return res.redirect('/')
+           })
+           .catch(err=>{
+                return  res.send('Error')
+           })
 }
+
 exports.editPostPage = (req,res,next)=>{ 
     const id = req.params.id;
     Post.findById(id,(err,post)=>{
