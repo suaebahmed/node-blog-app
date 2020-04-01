@@ -55,7 +55,7 @@ exports.makeAComment = (req,res,next)=>{
     var newComment = new Comment({
         _id: new mongoose.Types.ObjectId(),
         body: body,
-        userName: req.user.userName,
+        userName: req.session.user.userName,
         postId: id
     })
     Post.findById(id)

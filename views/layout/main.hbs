@@ -39,21 +39,18 @@
         <li><a href="#">link 2</a></li>
     </ul>
     <div class="burger">
-        <div class="line line1"></div>
-        <div class="line line2"></div>
-        <div class="line line3"></div>
-    </div>
-    <div id="modal">
-        <div class="button">
-            <div class="cross cross1"></div>
-            <div class="cross cross2"></div>
-            <div class="cross cross3"></div>
-        </div>
+        <div class="line"></div>
     </div>
     </div>
-
 </footer>
+
     <script src="/index.js"></script>
+    <script>
+        let icon = document.querySelector('.burger');
+        icon.addEventListener('click',()=>{
+            icon.classList.toggle('activeNav')
+        });
+    </script>
 </div>
 </body>
 </html>

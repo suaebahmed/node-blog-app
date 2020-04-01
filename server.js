@@ -7,7 +7,8 @@ const url = 'mongodb://127.0.0.1:27017/Blog';
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
-const passport = require('passport')
+// const passport = require('passport')
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
@@ -32,24 +33,39 @@ db.on('error', err => {
   console.error('connection error:', err)
 });
 // ------------- route -----------
+var store = new MongoDBStore({
+  uri: url,
+  collection: 'mySessions'
+});
 app.use(session({
   secret: 'mysecret',
-  saveUninitialized: true,
-  resave: true,
+  cookie: {
+    maxAge : 1000 * 60 * 60 * 2
+  },
+  store: store,
+  saveUninitialized: false,
+  resave: false,
+
 }))
 app.use(flash())
-app.use(passport.initialize())
-app.use(passport.session())
+// app.use(passport.initialize())
+// app.use(passport.session())
 
 app.use((req,res,next)=>{
-  res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
-  res.locals.login = req.isAuthenticated();
-  res.locals.user = req.user;
+  // res.locals.user = req.user;
+  // res.locals.login = req.isAuthenticated()
+  // res.locals.success = req.flash('success');
+  res.locals.success = req.session.flash2 //---- logout route
+  req.session.flash2 = ''
+
+  res.locals.login = req.session.isAuthenticated;
+  res.locals.user = req.session.user;
+
   next() // i forget this 
 })
 
-require('./config/passport')();
+// require('./config/passport')();
 
 app.use('/',require('./routes/blog-route'));
 app.use('/users',require('./routes/user-route'))

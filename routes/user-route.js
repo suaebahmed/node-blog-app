@@ -10,24 +10,50 @@ router.get('/login',(req,res)=>{ // turn off login page
     res.render('users/signin')
 })
 router.post('/signin',(req,res,next)=>{
-    const {email,password}= req.body;
-    if(email == '' || password == ''){
+    const {username,password}= req.body;
+    if(username == '' || password == ''){
         req.flash('error','make sure email and password not empty!')
         res.render('users/signin');
     }
     else{
-        passport.authenticate('local',{
-            successRedirect: '/',
-            failureRedirect: '/users/login',
-            failureFlash: true,
-            successFlash: 'Welcome!'
-        })(req,res,next)
+        // res.setHeader('Set-Cookie','isLoggedWithCookie=true')
+        // passport.authenticate('local',{
+        //     successRedirect: '/',
+        //     failureRedirect: '/users/login',
+        //     failureFlash: true,
+        //     successFlash: 'Welcome!'
+        // })(req,res,next)
+        User.findOne({email: username},(err,user)=>{
+            if(err){
+                return res.status(500).json('Error')
+            }
+            else if(!user){
+                return res.status(200).json({msg: 'no user found',user})
+            }
+            else{
+                bcrypt.compare(password,user.password,(err,isMatch)=>{
+                    if(err){
+                        return res.status(500).json('Error')
+                    }
+                    else if(!isMatch){
+                        return res.status(500).json({user,'err': isMatch})
+                    }else{
+                        req.session.user = user;
+                        req.session.isAuthenticated = true;
+                        res.redirect('/')
+                    }       
+                })
+            }
+        })
     }
 })
 
 router.get('/logout',(req,res,next)=>{
-    req.logout();
-    req.flash('success','you successfully logout')
+    // req.logout();
+    req.session.user = undefined;
+    req.session.isAuthenticated = false;
+    // req.flash('success','you successfully logout')
+    req.session.flash2 = 'you successfully logout'
     res.redirect('/users/login')
 })
 
@@ -85,6 +111,7 @@ router.post('/signup',(req,res)=>{
 //  ----------- user profile -----
 
 router.get('/profile',isAuth,(req,res,next)=>{
+    // console.log(req.session)
     res.render('users/profile')
 })
 
