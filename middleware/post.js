@@ -20,16 +20,27 @@ exports.createApost = (req,res,next)=>{
 
 exports.getAPostWithComment = (req,res,next)=>{
     const id = req.params.id;
-    let postData = { post: '',commentCount: null ,comments: ''}
+    // let postData = { post: '',commentCount: null ,comments: ''}
 
-    Post.findById(id)
+    // Post.findById(id)
+    //     .then(doc=>{
+    //         postData.post = doc
+    //         return Comment.find({postId: id}).exec()
+    //     })
+    //     .then(arr=>{
+    //         postData.comments =  arr;
+    //         postData.commentCount = arr.length;
+    //         return res.render('posts/post',{postData})
+    //     })
+    //     .catch(err=>{
+    //        return res.status(500).json('error')
+    //     })
+        let postData = { post: '',commentCount: null}
+
+        Post.findById(id)
         .then(doc=>{
             postData.post = doc
-            return Comment.find({postId: id}).exec()
-        })
-        .then(arr=>{
-            postData.comments =  arr;
-            postData.commentCount = arr.length;
+            postData.commentCount = doc.comments.length;
             return res.render('posts/post',{postData})
         })
         .catch(err=>{
@@ -49,24 +60,46 @@ exports.getAllPost = (req,res,next)=>{
 
 exports.makeAComment = (req,res,next)=>{
 
+// update with = findOne() and X.save()
 
     let id = req.params.id    
-    let { body,name } = req.body;
-    var newComment = new Comment({
-        _id: new mongoose.Types.ObjectId(),
+    let { body } = req.body;
+    // var newComment = new Comment({
+    //     _id: new mongoose.Types.ObjectId(),
+    //     body: body,
+    //     postId: id,
+    //     userName: req.session.user.userName,
+    //     userImg : req.session.user.imgPath
+    // })
+    // Post.findById(id)
+    //     .then(doc=>{
+    //         if(!doc){
+    //             return res.status(200).json({'msg': 'the post is empty so that you cannot make a commment'})
+    //         }else{
+    //             return newComment.save();
+    //         }
+    //     })
+    //     .then(data=>{
+    //         return res.redirect(`/posts/${id}`)
+    //     })
+    //     .catch(err=>{
+    //         return res.status(500).json({'error': err})
+    //     })
+
+    let newComment = {
         body: body,
         userName: req.session.user.userName,
-        postId: id
-    })
-    Post.findById(id)
-        .then(doc=>{
-            if(!doc){
-                return res.status(200).json({'msg': 'the post is empty so that you cannot make a commment'})
-            }else{
-                return newComment.save();
-            }
-        })
-        .then(data=>{
+        userImg : req.session.user.imgPath
+    }
+    Post.updateOne(
+        {_id: id},
+        {$push:{
+            // comments:{
+            //     $each : [ comment ]
+            // }}
+            comments: newComment }}
+        )
+        .then(()=>{
             return res.redirect(`/posts/${id}`)
         })
         .catch(err=>{

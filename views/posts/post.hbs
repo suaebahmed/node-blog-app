@@ -10,7 +10,7 @@
                 <h4> comments:</h4>
                 <div class="dropdown-divider"></div>
                 {{#if postData.commentCount}}
-                            {{#each postData.comments}}
+                            {{#each postData.post.comments}}
                                 <h6>{{this.body}}</h6>
                             {{/each}}
                     {{else}}
