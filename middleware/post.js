@@ -1,12 +1,17 @@
 const mongoose = require('mongoose')
 const Comment = require('../models/comment-model');
 const Post = require('../models/blog-models');
+const User = require('../models/User-model');
 
 exports.createApost = (req,res,next)=>{
+
+    let id = req.session.user._id;
     var newPost = new Post({
         title: req.body.title,
         body: req.body.body,
-        author: req.body.author
+        imgPath: req.body.file,
+        author: req.body.author,
+        authorId: id
     })
     newPost.save((err)=>{
         if(err){
@@ -36,12 +41,17 @@ exports.getAPostWithComment = (req,res,next)=>{
     //        return res.status(500).json('error')
     //     })
         let postData = { post: '',commentCount: null}
-
+        let userId;
         Post.findById(id)
         .then(doc=>{
             postData.post = doc
             postData.commentCount = doc.comments.length;
-            return res.render('posts/post',{postData})
+            userId = doc.authorId
+
+            return User.findById(userId)
+        })
+        .then((author)=>{
+            return res.render('posts/post',{postData,author})
         })
         .catch(err=>{
            return res.status(500).json('error')

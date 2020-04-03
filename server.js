@@ -33,6 +33,8 @@ db.on('error', err => {
   console.error('connection error:', err)
 });
 // ------------- route -----------
+
+
 var store = new MongoDBStore({
   uri: url,
   collection: 'mySessions'
@@ -68,6 +70,7 @@ app.use((req,res,next)=>{
 // require('./config/passport')();
 
 app.use('/',require('./routes/blog-route'));
+app.use('/',require('./routes/team-route'));
 app.use('/users',require('./routes/user-route'))
 
 

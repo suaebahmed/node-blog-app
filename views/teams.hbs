@@ -1,0 +1,21 @@
+<div class="text-center">
+<h1>About page</h1>
+</div>
+
+{{#each teams}}
+    <div class="col-md-6">
+        <div class="crad">
+            <div style="border-radius: 50%">
+                 <img src={{this.imgPath}} width="250px" height="250px" style="border-radius: 50%" alt="images user">
+            </div>
+            {{!-- <img src={{this.imgPath}} alt="images user"> --}}
+            <div class="card-body">
+                <div class="card-title">
+                    <p>Name: {{this.userName}}</p>
+                </div>
+                <p>bio: {{this.bio}}</p>
+                <a href="/teams/{{this._id}}"><button class="btn btn-outline-primary">All post</button></a>
+            </div>
+        </div>
+    </div>
+{{/each}}

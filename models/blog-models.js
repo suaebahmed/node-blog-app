@@ -23,13 +23,23 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    imgPath:{
+        type: String,
+    },
     author: {
         type: String,
         required: true
+    },
+    authorId:{
+        type: mongoose.Schema.Types.ObjectId, // --ref
+        required: true
+    },
+    tags:{
+        type: Array
     },
     comments: [commentSchema]  // --Embedded
 },{
     timestamps: true
 })
 
-module.exports = mongoose.model('Post',blogSchema)
+module.exports = mongoose.model('Post',blogSchema);

@@ -2,7 +2,7 @@
 <div class="row">
 {{#if postData }}
 
-    <div class="col-6 mx-auto">
+    <div class="col-md-6">
                 <h1>{{postData.post.title}}</h1>
                 <p>{{postData.post.body}}</p> 
                 <div class="text-muted">published by {{postData.post.author}}</div>
@@ -31,12 +31,20 @@
             <a href="/editPost/{{postData.post._id}}" id="editBtn"><button class="btn btn-primary btn-block my-4">edit</button></a>
             <a href="/delete/{{postData.post._id}}" id="deleteBtn"><button class="btn btn-danger btn-block">delete</button></a>
     </div>
+    <div class="col-md-6">
+        <div class="crad">
+            <div style="border-radius: 50%">
+                 <img src={{author.imgPath}} width="250px" height="250px" alt="images user">
+            </div>
+            <div class="card-body">
+                <div class="card-title">
+                    <p>Name: {{author.userName}}</p>
+                </div>
+                <p>bio: {{author.bio}}</p>
+            </div>
+        </div>
+    </div>
     {{else}}
     <h1>loading...</h1>
 {{/if}}
-</div>
-<div class="row">
-    <div id="contentForm" class="col-6 mx-auto">
-
-    </div>
 </div>

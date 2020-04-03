@@ -1,0 +1,23 @@
+<div class="row">
+        <div class="col-6">
+    {{#each allPost}}
+                <h1><a href='/posts/{{this._id}}'>{{this.title}}</a></h1>
+                <p>{{this.body}}</p> 
+                <div class="text-muted">published by {{this.author}}</div>
+                <div class="dropdown-divider"></div>
+    {{/each}}
+    </div>
+        <div class="col-md-6">
+        <div class="crad">
+            <div style="border-radius: 50%">
+                 <img src={{author.imgPath}} width="250px" height="250px" alt="images user">
+            </div>
+            <div class="card-body">
+                <div class="card-title">
+                    <p>Name: {{author.userName}}</p>
+                </div>
+                <p>bio: {{author.bio}}</p>
+            </div>
+        </div>
+    </div>
+</div>

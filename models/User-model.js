@@ -23,8 +23,6 @@ const userSchema = new mongoose.Schema({
     imgPath: {
         type: String,
     }
-},{
-    timestamps: true
 })
 
 module.exports = mongoose.model('User',userSchema)
