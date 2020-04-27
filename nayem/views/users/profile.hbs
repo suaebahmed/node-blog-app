@@ -1,0 +1,20 @@
+
+{{#if user}}
+<div class="user">
+    <img src="{{user.imgPath}}" alt="user image" width="200px" height="200px" style="border-radius: 50%;">
+    <h3>Name: {{user.userName}} </h3>
+    <p>Bio: {{user.bio}} </p>
+    <p>Email: {{user.email}} </p>
+    <button class="btn btn-primary">Edit profile</button>
+    <a  href="/users/delete"><button class="btn btn-danger">delete img</button></a>
+
+</div>
+{{/if}}
+
+    <form action="/users/upload" method="post" enctype="multipart/form-data">
+    <p>Upload the user info.</p>
+        <input type="file" name="image" id="fileInput">
+        <input type="text" name="bio" placeholder="Enter user bio">
+        <input type="submit" value="save" id="fileBtn">
+    </form>
+

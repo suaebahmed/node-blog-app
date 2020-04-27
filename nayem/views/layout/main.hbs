@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/css/profile.css">
+
+</head>
+<body>
+<div class="container">
+    <nav>
+        <ul class="nav mr-5">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/post">Create post</a></li>
+            <li class="nav-item"><a class="nav-link" href="/teams">Teams</a></li>            
+            <li class="nav-item"><a class="nav-link" href="/users/profile">Profile</a></li>            
+        </ul>
+        <ul class="nav justify-content-end">
+            {{#if login}}
+                <li class="nav-item"><a class="nav-link">{{user.email}}</a></li>
+                <li class="nav-item"><button><a class="nav-link" href="/users/logout">Logout</a></button></li>
+            {{else}}
+                <li class="nav-item"><a class="nav-link" href="/users/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/users/register">Register</a></li>
+            {{/if}}
+        </ul>
+    </nav>
+
+    {{{body}}}
+
+<footer>
+    <div class="nav">
+    <a href="#" class="logo">logo here</a>
+    <ul>
+        <li><a href="#">link 1</a></li>
+        <li><a href="#">link 2</a></li>
+    </ul>
+    <div class="burger">
+        <div class="line"></div>
+    </div>
+    </div>
+</footer>
+
+    <script src="/index.js"></script>
+    <script>
+        let icon = document.querySelector('.burger');
+        icon.addEventListener('click',()=>{
+            icon.classList.toggle('activeNav')
+        });
+    </script>
+</div>
+</body>
+</html>

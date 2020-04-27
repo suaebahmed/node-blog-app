@@ -1,0 +1,50 @@
+
+<div class="row">
+{{#if postData }}
+
+    <div class="col-md-6">
+                <h1>{{postData.post.title}}</h1>
+                <p>{{postData.post.body}}</p> 
+                <div class="text-muted">published by {{postData.post.author}}</div>
+                <span class="badge badge-primary">{{postData.commentCount}}</span>
+                <h4> comments:</h4>
+                <div class="dropdown-divider"></div>
+                {{#if postData.commentCount}}
+                            {{#each postData.post.comments}}
+                                <h6>{{this.body}}</h6>
+                            {{/each}}
+                    {{else}}
+                    <p>No comment yet</p>
+                {{/if}}
+
+                <form action="/posts/{{postData.post._id}}/comment" method="post">
+                    <div class="form-group">
+                        <input type="text" name="body" class="form-control" placeholder="make a comment *" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btnSubmit" value="Comment" />
+                    </div>
+                </form>
+
+
+
+            <a href="/editPost/{{postData.post._id}}" id="editBtn"><button class="btn btn-primary btn-block my-4">edit</button></a>
+            <a href="/delete/{{postData.post._id}}" id="deleteBtn"><button class="btn btn-danger btn-block">delete</button></a>
+    </div>
+    <div class="col-md-6">
+        <div class="crad">
+            <div style="border-radius: 50%">
+                 <img src={{author.imgPath}} width="250px" height="250px" alt="images user">
+            </div>
+            <div class="card-body">
+                <div class="card-title">
+                    <p>Name: {{author.userName}}</p>
+                </div>
+                <p>bio: {{author.bio}}</p>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <h1>loading...</h1>
+{{/if}}
+</div>

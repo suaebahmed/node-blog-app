@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
-const Post = require('../models/blog-models');
-const User = require('../models/User-model');
+const Post = require('../models/post-model');
+const User = require('../models/userModel');
+const Comment = require('../models/comment-model')
 
 exports.createApost = (req,res,next)=>{
 
-    // let id = req.session.user._id;
-    let id = req.user._id;
+    let id = req.params.id    
     var newPost = new Post({
         title: req.body.title,
         body: req.body.body,
@@ -24,21 +24,7 @@ exports.createApost = (req,res,next)=>{
 }
 
 exports.getAPostWithComment = (req,res,next)=>{
-    const id = req.params.id;
-    // let postData = { post: '',commentCount: null ,comments: ''}
-    // Post.findById(id)  ###
-    //     .then(doc=>{
-    //         postData.post = doc
-    //         return Comment.find({postId: id}).exec() ##
-    //     })
-    //     .then(arr=>{
-    //         postData.comments =  arr;
-    //         postData.commentCount = arr.length;
-    //         return res.render('posts/post',{postData})
-    //     })
-    //     .catch(err=>{
-    //        return res.status(500).json('error')
-    //     })
+        const id = req.params.id;
         let postData = { post: '',commentCount: null}
         let userId;
         Post.findById(id)
@@ -70,42 +56,14 @@ exports.getAllPost = (req,res,next)=>{
 exports.makeAComment = (req,res,next)=>{
     let id = req.params.id    
     let { body } = req.body;
-    // var newComment = new Comment({
-    //     _id: new mongoose.Types.ObjectId(),
-    //     body: body,
-    //     postId: id,
-    //     userName: req.session.user.userName,
-    //     userImg : req.session.user.imgPath
-    // })
-    // Post.findById(id)
-    //     .then(doc=>{
-    //         if(!doc){
-    //             return res.status(200).json({'msg': 'the post is empty so that you cannot make a commment'})
-    //         }else{
-    //             return newComment.save();
-    //         }
-    //     })
-    //     .then(data=>{
-    //         return res.redirect(`/posts/${id}`)
-    //     })
-    //     .catch(err=>{
-    //         return res.status(500).json({'error': err})
-    //     })
-
     let newComment = {
         body: body,
         userName: req.user.userName,
         userImg: req.user.imgPath
-        //_____________ session menagement method 2_______________
-        // userName: req.session.user.userName,
-        // userImg : req.session.user.imgPath
     }
     Post.updateOne(
         {_id: id},
         {$push:{
-            // comments:{
-            //     $each : [ comment ]
-            // }}
             comments: newComment 
             }
         })

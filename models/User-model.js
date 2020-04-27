@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 
+// unique: true // if we set the key we get a warning!
 const userSchema = new mongoose.Schema({
     userName: {
         type: String,
         required: true,
-        // unique: true
     },
     email: {
         type: String,

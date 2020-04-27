@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport')
-const User = require('../models/User-model');
+const User = require('../models/userModel')
+const Profile = require('../models/profile-model')
 const bcrypt = require('bcryptjs')
 const multer = require('multer')
 const isAuth = require('../config/isAuth')
@@ -16,46 +17,19 @@ router.post('/signin',(req,res,next)=>{
         res.render('users/signin');
     }
     else{
-        res.setHeader('Set-Cookie','isLoggedWithCookie=true')
+        // res.setHeader('Set-Cookie','isLoggedWithCookie=true')
         passport.authenticate('local',{
             successRedirect: '/',
             failureRedirect: '/users/login',
             failureFlash: true,
             successFlash: 'Welcome!'
         })(req,res,next)
-//_____________ session menagement method 2_______________
-        // User.findOne({email: username},(err,user)=>{
-        //     if(err){
-        //         return res.status(500).json('Error')
-        //     }
-        //     else if(!user){
-        //         return res.status(200).json({msg: 'no user found',user})
-        //     }
-        //     else{
-        //         bcrypt.compare(password,user.password,(err,isMatch)=>{
-        //             if(err){
-        //                 return res.status(500).json('Error')
-        //             }
-        //             else if(!isMatch){
-        //                 return res.status(500).json({user,'err': isMatch})
-        //             }else{
-        //                 req.session.user = user;
-        //                 req.session.isAuthenticated = true;
-        //                 res.redirect('/')
-        //             }       
-        //         })
-        //     }
-        // })
     }
 })
 
 router.get('/logout',(req,res,next)=>{
  req.logout();
  req.flash('success','you successfully logout')
-//_____________ session menagement method 2_______________
-// req.session.user = undefined;
-//     req.session.isAuthenticated = false;
-//     req.session.flash2 = 'you successfully logout'
     res.redirect('/users/login')
 })
 
@@ -64,9 +38,9 @@ router.get('/register',(req,res,next)=>{ // turn off register page
 })
 
 router.post('/signup',(req,res)=>{
-    const {userName,email,password} = req.body;
+    const {name,email,password} = req.body;
     var errArr=[]
-    if( !userName || !password  || !email){
+    if( !name || !password  || !email){
         errArr.push({msg: 'fill up all the field'})
     }
     if(password.length < 5){
@@ -89,7 +63,7 @@ router.post('/signup',(req,res)=>{
             bcrypt.genSalt(10,(err,selt)=>{
                 bcrypt.hash(password,selt,(err,hash)=>{
                     var newUser = new User({
-                        userName,
+                        name,
                         email,
                         password
                     });
@@ -127,8 +101,9 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage
 })
+// no work
 router.post('/upload',upload.single('image'),(req,res,next)=>{
-    User.findOne({email: req.user.email},(err,user)=>{
+    Profile.findOne({email: req.user.email},(err,user)=>{
         if(err){
            return res.send('Error to upload a file')
         }else{
