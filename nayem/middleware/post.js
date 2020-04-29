@@ -4,14 +4,18 @@ const User = require('../models/userModel');
 const Comment = require('../models/comment-model')
 
 exports.createApost = (req,res,next)=>{
+    
+    const {tags} = req.body
+    var arr = tags.split(',')
+    var newTagsArr = arr.map(ar=>{
+        return ar.trim();
+    })
 
-    let id = req.params.id    
     var newPost = new Post({
         title: req.body.title,
         body: req.body.body,
-        imgPath: req.body.file,
-        author: req.body.author,
-        authorId: id
+        tags: newTagsArr,
+        author: req.user._id,
     })
     newPost.save((err)=>{
         if(err){

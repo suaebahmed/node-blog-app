@@ -13,31 +13,35 @@ const blogSchema = new mongoose.Schema({
     },
     author: {
         type: String,
-        ref: "User",
+        ref: "User"
     },
     tags:{
         type: [String],
-        required: true,
+        required: true
     },
-    thumbnail: String,
-    readTime: String,
+    thumbnail: {
+        type: String
+    },
+    readTime: {
+        type: String
+    },
     likes: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: "User"
         }
     ],
     dislikes: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: "User"
         }
     ],
     //throw an error because there are no comments before
     comments: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref:  "Comment",
+            ref:  "Comment"
         }
     ]
 },{
